@@ -1,20 +1,36 @@
 import React from 'react';
-import { render } from "@testing-library/react";
+import * as rtl from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import ContactForm from './ContactForm';
 
-describe('ContactForm', () => {
+describe('ContactForm initial validation', () => {
   // Test the test setup
-  it('renders without errors', () => {
-    render(<ContactForm />)
+  it('ContactForm renders without errors', () => {
+    rtl.render(<ContactForm />)
   })
-  // Test that components and/or content renders
-  
-    // First name
-    // Last name
-    // Email
-    // Message
-    // Submit
+
+describe('ContactForm renders successfully', () => {
+  // Test contact form renders
+    it('Form elements render without errors', () => {
+      const { getByTestId } = rtl.render(
+        <ContactForm />
+      );
+      // First name
+      getByTestId(/firstname/i);
+      
+      // Last name
+      getByTestId(/lastname/i);
+
+      // Email
+      getByTestId(/email/i);
+
+      // Message
+      getByTestId(/message/i);
+
+      // Submit
+      getByTestId(/submit/i);
+    })
+})
     
   // Test that Submit fires the onSubmit funtion
 
