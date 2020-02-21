@@ -1,18 +1,26 @@
 import React, { createRef } from 'react';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import { fireEvent, render, cleanup, act } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import ContactForm from './ContactForm';
 
+// Configure enzyme
+Enzyme.configure({ adapter: new Adapter() });
+
+// Tests
 describe('ContactForm initial validation', () => {
-  // Test the test setup
+  // Initial validation of test setup
   it('ContactForm renders without errors', () => {
     render(<ContactForm />)
   })
+  cleanup();
+})
 
 describe('ContactForm renders successfully', () => {
   // Test contact form renders
   it('renders form elements without errors', () => {
-    const { getByTestId } = render(
+    const { getByTestId, getByText } = render(
       <ContactForm />
     );
     // First name
@@ -28,30 +36,58 @@ describe('ContactForm renders successfully', () => {
     getByTestId(/message/i);
 
     // Submit
-    getByTestId(/submit/i);
+    getByText(/submit/i);
   })
+  cleanup();
 })
-    
+
+describe('submitting succesfully saves data to state', () => {
   // Test that Submit fires the onSubmit funtion
   it('fires onSubmit when clicking Submit', async () => {
     // Test variables and references
     const spy = jest.fn();
-    const form = render(
+    const { getByText } = render(
       <ContactForm />
     );
     await act(async () => {
       // Click the submit button with spy monitoring submit calls a function onSubmit
-      const submit = form.getByTestId(/submit/);
+      const submit = getByText(/submit/i);
       submit.onclick = spy;
       fireEvent.click(submit); // left click
       expect(spy).toHaveBeenCalledTimes(1);  
     });  
+    cleanup();
   })
 
-  // Test the function fired by onSubmit works as expected
-
-
   // Test that onSubmit is submitting whatever data it is given
+  describe ('stores the data using setData when onSubmit fires', () => {
+    const form = Enzyme.shallow(<ContactForm />)
+    const setState = jest.fn();
+    const useStateSpy = jest.spyOn(React, 'useState');
+    useStateSpy.mockImplementation((init) => [init, setState]);
+
+    // Teardowm
+    afterEach(() => {
+      jest.clearAllMocks();
+    })
+
+    // Test the mock data is submitted in the setState
+    describe('Submit', () => {
+      // Setup
+      // form = Enzyme.shallow(<ContactForm />);
+      // Set mock data
+      form.find('[htmlFor="firstName"]').value = 'a';
+      form.find('[htmlFor="lastName"]').value = 'b';
+      form.find('[htmlFor="email"]').value = 'c';
+      form.find('[htmlFor="message"]').value = 'd';
+      // Submit the mock data
+      form.simulate('submit');
+      // Test expected vs. actual values
+      expect(setState).toHaveBeenCalled();
+    })
+  })
+
+})
 
   // Test the integrity of the data posted / submitted
 
@@ -111,5 +147,3 @@ describe('ContactForm renders successfully', () => {
        // Expected: string
        // Match: N/A
        // Max-length: N/A
- 
-})
