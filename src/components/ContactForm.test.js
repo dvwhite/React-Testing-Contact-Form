@@ -1,40 +1,55 @@
-import React from 'react';
-import * as rtl from "@testing-library/react";
+import React, { createRef } from 'react';
+import { fireEvent, render, cleanup, act } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import ContactForm from './ContactForm';
 
 describe('ContactForm initial validation', () => {
   // Test the test setup
   it('ContactForm renders without errors', () => {
-    rtl.render(<ContactForm />)
+    render(<ContactForm />)
   })
 
 describe('ContactForm renders successfully', () => {
   // Test contact form renders
-    it('Form elements render without errors', () => {
-      const { getByTestId } = rtl.render(
-        <ContactForm />
-      );
-      // First name
-      getByTestId(/firstname/i);
-      
-      // Last name
-      getByTestId(/lastname/i);
+  it('renders form elements without errors', () => {
+    const { getByTestId } = render(
+      <ContactForm />
+    );
+    // First name
+    getByTestId(/firstname/i);
+    
+    // Last name
+    getByTestId(/lastname/i);
 
-      // Email
-      getByTestId(/email/i);
+    // Email
+    getByTestId(/email/i);
 
-      // Message
-      getByTestId(/message/i);
+    // Message
+    getByTestId(/message/i);
 
-      // Submit
-      getByTestId(/submit/i);
-    })
+    // Submit
+    getByTestId(/submit/i);
+  })
 })
     
   // Test that Submit fires the onSubmit funtion
+  it('fires onSubmit when clicking Submit', async () => {
+    // Test variables and references
+    const spy = jest.fn();
+    const form = render(
+      <ContactForm />
+    );
+    await act(async () => {
+      // Click the submit button with spy monitoring submit calls a function onSubmit
+      const submit = form.getByTestId(/submit/);
+      submit.onclick = spy;
+      fireEvent.click(submit); // left click
+      expect(spy).toHaveBeenCalledTimes(1);  
+    });  
+  })
 
   // Test the function fired by onSubmit works as expected
+
 
   // Test that onSubmit is submitting whatever data it is given
 
