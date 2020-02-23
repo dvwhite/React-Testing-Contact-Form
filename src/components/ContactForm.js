@@ -22,7 +22,7 @@ const ContactForm = () => {
             data-testid='firstname'
           />
           {errors.firstName && (
-            <p>Looks like there was an error: {errors.firstName.type}</p>
+            <p data-testid='yup-error-fname'>Looks like there was an error: {errors.firstName.type}</p>
           )}
         </div>
 
@@ -35,7 +35,7 @@ const ContactForm = () => {
             data-testid='lastname'
           />
           {errors.lastName && (
-            <p>Looks like there was an error: {errors.lastName.type}</p>
+            <p data-testid='yup-error-lname'>Looks like there was an error: {errors.lastName.type}</p>
           )}
         </div>
 
@@ -48,7 +48,7 @@ const ContactForm = () => {
             data-testid='email' 
           />
           {errors.email && (
-            <p>Looks like there was an error: {errors.email.type}</p>
+            <p data-testid='yup-error-email'>Looks like there was an error: {errors.email.type}</p>
           )}
         </div>
         <div>
@@ -64,7 +64,7 @@ const ContactForm = () => {
             {JSON.stringify(data, null, 2)}
           </pre>
         )}
-        <input type="submit" value='submit'/>
+        <input type="submit" value='submit' data-testid='submit'/>
       </form>
     </div>
   );
