@@ -1,6 +1,8 @@
 import React, { createRef } from 'react';
 import { fireEvent, render, cleanup, act } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
+import Enzyme, { mount, find, simulate } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import ContactForm from './ContactForm';
 
 // Tests
