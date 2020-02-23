@@ -13,27 +13,53 @@ describe('ContactForm initial validation', () => {
 })
 
 describe('ContactForm renders successfully', () => {
-  // Test contact form renders
-  it('renders form elements without errors', () => {
-    const { getByTestId, getByText } = render(
-      <ContactForm />
-    );
-    // First name
-    getByTestId(/firstname/i);
-    
-    // Last name
-    getByTestId(/lastname/i);
+  // Declare test methods in outermost function scope to create a closure
+  // enabling access to the methods are they are created and destroyed
+  // before and after each test using beforeEach() and afterEach()
+  let getByTestId;
+  let getByText;
 
-    // Email
-    getByTestId(/email/i);
-
-    // Message
-    getByTestId(/message/i);
-
-    // Submit
-    getByText(/submit/i);
+  // Setup
+  beforeEach(() => {
+    const form = render(<ContactForm />);
+    getByTestId = form.getByTestId;
+    getByText = form.getByText;
   })
-  cleanup();
+
+  // Teardown
+  afterEach(() => {
+    cleanup();
+  })
+
+  // Test contact form renders
+  it('renders form without errors', () => {
+    render(<ContactForm />);
+  });
+  
+  // First name
+  it('renders first name without errors', () => {
+    getByTestId(/firstname/i);
+  });
+
+  // Last name
+  it('renders last name without errors', () => {
+    getByTestId(/lastname/i);
+  });
+
+  // Email
+  it('renders email without errors', () => {
+    getByTestId(/email/i);
+  });
+
+  // Message
+  it('renders message without errors', () => {
+    getByTestId(/message/i);
+  });
+
+  // Submit
+  it('renders submit without errors', () => {
+    getByText(/submit/i);
+  });
 })
 
 describe('submitting succesfully saves data to state', () => {
@@ -53,54 +79,7 @@ describe('submitting succesfully saves data to state', () => {
     });  
     cleanup();
   })
-
-  // Test that onSubmit is submitting whatever data it is given
-  describe ('stores the data using setData when onSubmit fires', () => {
-    const form = Enzyme.shallow(<ContactForm />)
-    const setState = jest.fn();
-    const useStateSpy = jest.spyOn(React, 'useState');
-    useStateSpy.mockImplementation((init) => [init, setState]);
-
-    // Teardowm
-    afterEach(() => {
-      jest.clearAllMocks();
-    })
-
-    // Test the mock data is submitted in the setState
-    describe('Submit', () => {
-      // Setup
-      // form = Enzyme.shallow(<ContactForm />);
-      // Set mock data
-      form.find('[htmlFor="firstName"]').value = 'a';
-      form.find('[htmlFor="lastName"]').value = 'b';
-      form.find('[htmlFor="email"]').value = 'c';
-      form.find('[htmlFor="message"]').value = 'd';
-      // Submit the mock data
-      form.simulate('submit');
-      // Test expected vs. actual values
-      expect(setState).toHaveBeenCalled();
-    })
-  })
-
 })
-
-  // Test the integrity of the data posted / submitted
-
-    // Test the data posted at initial submit
-
-      // Contains the expected data
-
-      // Shape matches target API specification for request type
-    
-      // Take a snapshot of the data prior to submission
-
-    // Test that data posted is stored in state
-
-    // Test that data posted in prior test is correctly retained following a partial overwrite
-
-    // Test that data posted in prior test is correctly retained in full overwrite
-  
-    // Test that data does not save in unexpected locations, such as localStorage
 
   // Test that data validation occurs in required fields
 
