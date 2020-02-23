@@ -40,27 +40,32 @@ describe('ContactForm renders successfully', () => {
   
   // First name
   it('renders first name without errors', () => {
-    getByTestId(/firstname/i);
+    const fname = getByTestId(/firstname/i);
+    expect(fname).toBeInTheDocument();
   });
 
   // Last name
   it('renders last name without errors', () => {
-    getByTestId(/lastname/i);
+    const lastName = getByTestId(/lastname/i);
+    expect(lastName).toBeInTheDocument();
   });
 
   // Email
   it('renders email without errors', () => {
-    getByTestId(/email/i);
+    const email = getByTestId(/email/i);
+    expect(email).toBeInTheDocument();
   });
 
   // Message
   it('renders message without errors', () => {
-    getByTestId(/message/i);
+    const message = getByTestId(/message/i);
+    expect(message).toBeInTheDocument();
   });
 
   // Submit
   it('renders submit without errors', () => {
-    getByText(/submit/i);
+    const submit = getByText(/submit/i);
+    expect(submit).toBeInTheDocument();
   });
 })
 
