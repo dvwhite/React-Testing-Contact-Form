@@ -84,17 +84,63 @@ describe('submitting succesfully saves data to state', () => {
       fireEvent.click(submit); // left click
       expect(spy).toHaveBeenCalledTimes(1);  
     });  
-    cleanup();
   })
+
+  cleanup();
 })
 
   // Test that data validation occurs in required fields
+describe('Data valudation occurs in the required fields', () => {
+  // Required input fields display validation if length of content < 1
+  let form;
 
-    // Required input fields display validation if length of content < 1
+  // Enzyme is handy to fire a simulated submit event to trigger Yup validation
+  Enzyme.configure({ adapter: new Adapter() })
 
-      // First name
-      // Last name
-      // Email
+  // Setup
+  beforeEach(() => {
+    form = mount(<ContactForm />);
+  })
+
+  // Teardown
+  afterEach(() => {
+    cleanup();
+  })
+
+  // First name
+  it('displays an error message if first name is blank', () => {
+    
+    act(async () => {
+      form.find('form').simulate('submit');
+      await wait(() => {
+        expect(getAllByTestId(/yup-error-fname/i)).not.toBeNull();
+      })
+    })
+  });
+
+  // Last name
+  it('displays an error message if last name is blank', () => {
+    
+    act(async () => {
+      form.find('form').simulate('submit');
+      await wait(() => {
+        expect(getAllByTestId(/yup-error-lname/i)).not.toBeNull();
+      })
+    })
+  });
+
+  // Email
+  it('displays an error message if the email is blank', () => {
+    
+    act(async () => {
+      form.find('form').simulate('submit');
+      await wait(() => {
+        expect(getAllByTestId(/yup-error-email/i)).not.toBeNull();
+      })
+    })
+  });
+})
+    
     
     // Test for expected data type, regex match, and max-length (as applicable)
 
