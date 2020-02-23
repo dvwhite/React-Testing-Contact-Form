@@ -1,12 +1,7 @@
 import React, { createRef } from 'react';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { fireEvent, render, cleanup, act } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import ContactForm from './ContactForm';
-
-// Configure enzyme
-Enzyme.configure({ adapter: new Adapter() });
 
 // Tests
 describe('ContactForm initial validation', () => {
