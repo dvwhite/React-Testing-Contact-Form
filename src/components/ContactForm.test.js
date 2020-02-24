@@ -115,7 +115,7 @@ describe('test the data is submitted correctly from the form', () => {
       "firstName": "David",
       "lastName": "White",
       "email": "david@davidwhite.com",
-      "tos": true,
+      "tos": "true",
       "message": "This is a test"
     };
     
@@ -143,7 +143,7 @@ describe('test the data is submitted correctly from the form', () => {
 
     // TOS
     const inputTOS = getByTestId('tos');
-    expect(inputTOS.value).toBe("on");
+    expect(inputTOS.value).toBe("false");
     fireEvent.change(inputTOS, { target: { value: testObject.tos} });
     expect(inputTOS.value).toBe("true");
     console.log(inputTOS.value)
@@ -165,6 +165,7 @@ describe('test the data is submitted correctly from the form', () => {
         lastName: inputLname.value,
         email: inputEmail.value,
         message: message.value,
+        tos: inputTOS.value,
       };
       mockOnSubmit(data);
     };
