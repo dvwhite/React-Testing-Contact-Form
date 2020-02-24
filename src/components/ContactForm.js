@@ -18,7 +18,7 @@ const ContactForm = () => {
           <input
             name="firstName"
             placeholder="bill"
-            ref={register({ required: true, maxLength: 3 })}
+            ref={register({ required: true })}
             data-testid='firstname'
           />
           {errors.firstName && (
@@ -60,7 +60,7 @@ const ContactForm = () => {
           />
         </div>
         {data && (
-          <pre style={{ textAlign: "left", color: "white" }}>
+          <pre style={{ textAlign: "left", color: "white" }} data-testid='pre-data'>
             {JSON.stringify(data, null, 2)}
           </pre>
         )}
