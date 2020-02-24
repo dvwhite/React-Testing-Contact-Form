@@ -56,6 +56,12 @@ describe('ContactForm renders successfully', () => {
     expect(email).toBeInTheDocument();
   });
 
+  // TOS
+  it('renders TOS without errors', () => {
+    const tos = getByTestId(/tos/i);
+    expect(tos).toBeInTheDocument();
+  });
+
   // Message
   it('renders message without errors', () => {
     const message = getByTestId(/message/i);
@@ -109,6 +115,7 @@ describe('test the data is submitted correctly from the form', () => {
       "firstName": "David",
       "lastName": "White",
       "email": "david@davidwhite.com",
+      "tos": true,
       "message": "This is a test"
     };
     
@@ -133,6 +140,13 @@ describe('test the data is submitted correctly from the form', () => {
     fireEvent.change(inputEmail, { target: { value: testObject.email} });
     expect(inputEmail.value).toBe("david@davidwhite.com");
     console.log(inputEmail.value)
+
+    // TOS
+    const inputTOS = getByTestId('tos');
+    expect(inputTOS.value).toBe("on");
+    fireEvent.change(inputTOS, { target: { value: testObject.tos} });
+    expect(inputTOS.value).toBe("true");
+    console.log(inputTOS.value)
 
     // Message
     const message = getByTestId('message');

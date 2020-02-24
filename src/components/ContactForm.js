@@ -51,6 +51,21 @@ const ContactForm = () => {
             <p data-testid='yup-error-email'>Looks like there was an error: {errors.email.type}</p>
           )}
         </div>
+        {/* Additional form element for stretch */}
+        <div>
+          <label htmlFor="checkbox">Agree to the TOS</label>
+          <input 
+            type='checkbox'
+            name="tos"
+            value={false}
+            ref={register({ required: true })} 
+            data-testid='tos'
+            className='checkbox'
+          />
+        </div>
+        {errors.tos && (
+            <p data-testid='yup-error-tos'>Looks like there was an error: {errors.tos.type}</p>
+          )}
         <div>
           <label htmlFor="message">Message</label>
           <textarea 
