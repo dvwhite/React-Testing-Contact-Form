@@ -53,7 +53,7 @@ const ContactForm = () => {
         </div>
         {/* Additional form element for stretch */}
         <div>
-          <label htmlFor="checkbox">Agree to the TOS</label>
+          <label htmlFor="checkbox">Agree to the TOS*</label>
           <input 
             type='checkbox'
             name="tos"
